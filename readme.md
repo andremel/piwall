@@ -11,6 +11,7 @@ where * is the location here:
 for images
 ---
 sudo apt-get fbi
+
 sudo fbi -T 1 cons.jpg
 
 for playing videos
