@@ -1,0 +1,109 @@
+tell application "Terminal" to quit
+
+display dialog "Select a pi to transfer a file to:"
+set selectPi to choose from list {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}
+set ipPi to "10.10.6.1"
+
+
+if selectPi is false then
+	error number -128
+	
+else if selectPi contains "1" then
+	set ipPi to "10.10.6.2"
+	display dialog "You have chosen pi 1, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "2" then
+	set ipPi to "10.10.6.3"
+	display dialog "You have chosen pi 2, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "3" then
+	set ipPi to "10.10.6.4"
+	display dialog "You have chosen pi 3, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "4" then
+	set ipPi to "10.10.6.5"
+	display dialog "You have chosen pi 4, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "5" then
+	set ipPi to "10.10.6.6"
+	display dialog "You have chosen pi 5, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "6" then
+	set ipPi to "10.10.6.7"
+	display dialog "You have chosen pi 6, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "7" then
+	set ipPi to "10.10.6.8"
+	display dialog "You have chosen pi 7, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "8" then
+	set ipPi to "10.10.6.9"
+	display dialog "You have chosen pi 8, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "9" then
+	set ipPi to "10.10.6.10"
+	display dialog "You have chosen pi 9, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "10" then
+	set ipPi to "10.10.6.11"
+	display dialog "You have chosen pi 10, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "11" then
+	set ipPi to "10.10.6.12"
+	display dialog "You have chosen pi 11, choose a file to transfer to " & ipPi & "."
+	
+else if selectPi contains "12" then
+	set ipPi to "10.10.6.13"
+	display dialog "You have chosen pi 12, choose a file to transfer to " & ipPi & "."
+	
+end if
+
+set theFile to (choose file)
+set theFile to quoted form of POSIX path of result
+
+if theFile is false then
+	error number -128
+else
+	tell application "System Events"
+		display dialog "You have chosen to transfer " & theFile & ". Is this correct?"
+	end tell
+end if
+
+display dialog "Enter your password" default answer "" with hidden answer
+set the sudopw to the text returned of the result
+
+display dialog "Enter the password for the raspberry pi" default answer "" with hidden answer
+set the pipw to the text returned of the result
+
+---convert file title so we can use it in terminal
+
+tell application "Terminal"
+	activate
+	delay 2
+	my execCmd("sudo scp " & theFile & " pi@" & ipPi & ":", 10)
+	my execCmd("" & sudopw & "", 8)
+	my execCmd("" & pipw & "", 3)
+	display dialog "You have successfully transferred " & theFile & " successfully"
+	
+	
+end tell
+
+
+on execCmd(cmd, pause)
+	tell application "System Events"
+		tell application process "Terminal"
+			set frontmost to true
+			keystroke cmd
+			keystroke return
+		end tell
+	end tell
+	delay pause
+end execCmd
+
+
+
+
+
+
+
+
